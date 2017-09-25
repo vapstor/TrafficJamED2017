@@ -21,7 +21,6 @@ template<typename T>
 			tamanhoPista = s;
 		}
 
-
 	protected:
 		double velocidadePista;
 		int tamanhoPista;

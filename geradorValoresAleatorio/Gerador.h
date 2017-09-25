@@ -8,7 +8,7 @@
 #ifndef GERADORVALORESALEATORIO_GERADOR_H_
 #define GERADORVALORESALEATORIO_GERADOR_H_
 //
-#include "stdlib.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 namespace structures {

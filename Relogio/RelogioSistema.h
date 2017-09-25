@@ -11,12 +11,13 @@
 #define RELOGIO_RELOGIOSISTEMA_H_
 #include "../Estruturas/linked_list.h"
 #include "../Semaforo/ListaSemaforos.h"
+#include "../Veiculo/Carro.h"
 
 namespace structures {
 
 template <typename T>
 
-class RelogioSistema : LinkedList<T>, ListaSemaforos<T>{
+class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Carro<T>{
 	public:
 		RelogioSistema() {
 
@@ -24,7 +25,9 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>{
 
 
 
-		inserirCarro();
+		inserirCarro() {
+			inserir
+		}
 
 		mudancaEstadoSemaforo();
 
@@ -33,7 +36,9 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>{
 
 		}
 
-		trocaPista();
+		void trocaPista() {
+
+		}
 
 	protected:
 	};
