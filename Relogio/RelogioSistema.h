@@ -27,14 +27,17 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 		}
 
 		void inserirCarro(Carro<T> c, Pista<carro> p) {
-			Pista<T>::adicionaCarro(c, p);
+			Pista<T> pistaInsereTeste = listaPistas<T>::S2norte;
+			pistaInsereTeste.adicionaCarro(new Carro, this);
 		}
 
-		void mudaEstadoSemaforo(Pista<T>) {
-			if(Sinaleira<T>::aberto) {
-				Sinaleira<T>::aberto = false;
+		void mudaEstadoSemaforo(tempo = 30) {
+			SinaleiraAtual = Sinaleira<T>::getSinaleiraAtual();
+			bool aberto = SinaleiraAtual.aberto;
+			if(aberto) {
+				SinaleiraAtual.aberto = false;
 			} else {
-				Sinaleira<T>::aberto = true;
+				SinaleiraAtual.aberto = true;
 			}
 		}
 
@@ -86,6 +89,7 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 	protected:
 		Pista<T> p;
 		int tempoSimulacao;
+		Sinaleira<T> SinaleiraAtual;
 	};
 }
 

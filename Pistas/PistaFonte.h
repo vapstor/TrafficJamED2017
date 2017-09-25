@@ -20,7 +20,7 @@ template <typename carros>
 		public:
 			PistaFonte(double v, int t, int li, int ls) {
 				velocidadePista = v;
-				tamanho = t;
+				Pista<T>::tamanho = t;
 				novoCarro = new Carro();
 				varianciaFonte = calculaVariancia(li, ls);
 			}
@@ -30,10 +30,12 @@ template <typename carros>
 			}
 
 			void adicionaCarro(Carro<carros> c, int v) {
-				c = novoCarro;
-				v = varianciaFonte;
+				novoCarro = c;
+				varianciaFonte = v;
 				int time = RelogioSistema<carros>::tempoSimulacao;
-				Pista<carros>::enqueue(c);
+				if(varianciaFonte >= time) {
+					this->enqueue(novoCarro);
+				}
 			}
 
 		protected:

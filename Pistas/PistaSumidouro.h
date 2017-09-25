@@ -19,11 +19,9 @@ template<typename carros>
 	class PistaSumidouro : Pista<carros>, RelogioSistema<carros> {
 	public:
 		PistaSumidouro (double v, int s) {
-			velocidadePista = v;
-			tamanhoPista = s;
+			Pista<carros>::velocidadePista = v;
+			Pista<carros>::tamanhoPista = s;
 		}
-
-
 
 		int calculaTempoPercorrer(Carro<T> c) {
 			tamanhoPista = tamanhoPista - (c.tamanhoCarro + c.distanciaEntreCarros());
@@ -32,14 +30,13 @@ template<typename carros>
 
 		void fimDaFila() {
 			pistaAtual = Pista<carros>::getPistaAtual();
-			pistaAtual.
-			if (RelogioSistema<carros>::relogio >= calculaTempoPercorrer(pistaAtual))) {
+			Carro<carros> CarroDeletar = pistaAtual.at(0);
+			int relogio = RelogioSistema<carros>::relogio;
+			if (relogio >= calculaTempoPercorrer(carroDeletar)) {
 				Carro<carros> CarroFimFila = pistaAtual.deletaCarro();
 			}
 		}
 	protected:
-		double velocidadePista;
-		int tamanhoPista;
 		Pista<carros> pistaAtual;
 	};
 
