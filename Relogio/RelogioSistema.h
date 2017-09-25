@@ -10,16 +10,19 @@
 #ifndef RELOGIO_RELOGIOSISTEMA_H_
 #define RELOGIO_RELOGIOSISTEMA_H_
 #include "../Estruturas/linked_list.h"
+#include "../Semaforo/ListaSemaforos.h"
 
 namespace structures {
 
 template <typename T>
 
-class RelogioSistema : LinkedList<T>{
+class RelogioSistema : LinkedList<T>, ListaSemaforos<T>{
 	public:
 		RelogioSistema() {
 
 		}
+
+
 
 		inserirCarro();
 

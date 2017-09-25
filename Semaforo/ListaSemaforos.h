@@ -13,6 +13,8 @@
 
 namespace structures {
 
+//!uma fila num semaforo - semaforo na outra fila;
+
 template<typename T>
 //! Classe Lista Semaforos
 	class ListaSemaforos : public LinkedList<T>, Sinaleira<T> {
@@ -33,6 +35,8 @@ template<typename T>
 			LinkedList<T>::push_back(s1);
 			LinkedList<T>::push_back(s2);
 		}
+
+
 
 		~ListaSemaforos() {
 			LinkedList<T>::clear();

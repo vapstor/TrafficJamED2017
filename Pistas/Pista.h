@@ -12,7 +12,6 @@
 #include <stdexcept>  // C++ Exceptions
 #include "./Estruturas/array_queue.h" //! Fila Encadeada
 #include "./Veiculo/Carro.h"
-#include "./Veiculo/Onibus.h"
 
 namespace structures {
 
@@ -30,15 +29,6 @@ template<typename T>
 		void adicionaCarro(Carro<T> c) {
 			int i = espacoOcupado;
 			int tamanhoCarroOcupa = c.tamanho + c.distanciaEntreCarros();
-			i = i + tamanhoCarroOcupa;
-			if (i < tamanhoPista) {
-				Pista<T>::enqueue(c);
-			}
-		}
-
-		void adicionaOnibus(Onibus<T> o) {
-			int i = espacoOcupado;
-			int tamanhoCarroOcupa = o.tamanho + o.distanciaEntreCarros();
 			i = i + tamanhoCarroOcupa;
 			if (i < tamanhoPista) {
 				Pista<T>::enqueue(c);

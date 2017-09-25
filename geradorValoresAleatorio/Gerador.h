@@ -15,18 +15,15 @@ namespace structures {
 template<typename T>
 	class Gerador {
 	public:
-		Gerador(int lI, int lS) {
+		int Gerador(int lI, int lS) {
 			limiteInferior = lI;
 			limiteSuperior = lS;
-		}
-
-		int NumeroAleatorio() {
 			srand((unsigned)time(NULL)); //numero aleatorio
 			return int(((double(rand())/RAND_MAX)*(limiteSuperior - limiteInferior)) +limiteInferior);
 		}
 
 	public:
-		int limiteInferior, limiteSuperior;
+		int limiteInferior, limiteSuperior, numAleatorio;
 	};
 }
 

@@ -7,15 +7,16 @@
 
 #ifndef VEICULO_CARRO_H_
 #define VEICULO_CARRO_H_
+#include "../geradorValoresAleatorio/Gerador.h"
 
 namespace structures {
 
 template <typename T>
 
-class Carro {
+class Carro : Gerador<T>{
 	public:
 		Carro() {
-			tamanho = 4;
+			tamanhoCarro = Gerador(4, 6);//! instancia tamanho do carro entre 4,5,6
 			sSegurancaFrente = 2;
 			sSegurancaAtras = 1;
 		}
@@ -33,7 +34,7 @@ class Carro {
 		}
 
 	protected:
-		int tamanho;
+		int tamanhoCarro;
 		int sSegurancaFrente;
 		int sSegurancaAtras;
 	};
