@@ -36,8 +36,6 @@ template<typename T>
 			LinkedList<T>::push_back(s2);
 		}
 
-
-
 		~ListaSemaforos() {
 			LinkedList<T>::clear();
 		}
