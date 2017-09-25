@@ -51,8 +51,6 @@ template<typename sinaleiras>
 			LinkedList<sinaleiras>::push_back(S2Oeste);
 		}
 
-
-
 		~ListaSemaforos() {
 			LinkedList<sinaleiras>::clear();
 		}

@@ -20,7 +20,7 @@ namespace structures {
 
 template<typename pistas>
 	//! Classe Lista Pistas (Lista Encadeada)
-class listaPistas : public LinkedList<pistas>, public PistaSumidouro<pistas>, public PistaFonte<pistas>{
+class listaPistas : public LinkedList<pistas>, public Pista<pistas>, public PistaSumidouro<pistas>, public PistaFonte<pistas>{
 	public:
 		listaPistas() {
 			//! Cria Lista
@@ -81,13 +81,14 @@ class listaPistas : public LinkedList<pistas>, public PistaSumidouro<pistas>, pu
 		}
 		//! Declaração das Pistas
 	protected:
-		PistaSumidouro O1oeste, N1norte, S1sul; //! Pistas Sumidouros lado Esquerdo
-		PistaSumidouro N2norte, S2sul, L1leste; //! Pistas Sumidouros lado Direito
+		PistaSumidouro<carros> O1oeste, N1norte, S1sul; //! Pistas Sumidouros lado Esquerdo
+		PistaSumidouro<carros> N2norte, S2sul, L1leste; //! Pistas Sumidouros lado Direito
 
-		PistaFonte O1leste, N1sul, S1norte; //!Pistas Fontes lado Esquerdo
-		PistaFonte N2sul, S2norte, L1oeste; //! Pistas Fontes lado Direito
+		PistaFonte<carros> O1leste, N1sul, S1norte; //!Pistas Fontes lado Esquerdo
+		PistaFonte<carros> N2sul, S2norte, L1oeste; //! Pistas Fontes lado Direito
 
-		Pista C1oeste, C1leste; //! Pistas Centrais
+		Pista<carros> C1oeste, C1leste; //! Pistas Centrais
+
 	};
 
 

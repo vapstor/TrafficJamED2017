@@ -13,6 +13,7 @@
 #include "./Estruturas/array_queue.h" //! Fila Encadeada
 #include "./Veiculo/Carro.h"
 #include "./Semaforo/Sinaleira.h"
+#include "./Estruturas/array_list.h"
 namespace structures {
 
 template<typename carros>
@@ -27,14 +28,22 @@ template<typename carros>
 		}
 
 		//! Se o tamanho ocupado+tamanho que o carro ocupa ainda for menor que o tamanho da pista, adiciona carro
-		void adicionaCarro(Carro<T> c) {
-			Pista p = pistaParaInserir();
-			int i = espacoOcupado;
-			int tamanhoCarroOcupa = c.tamanho + c.distanciaEntreCarros();
-			i = i + tamanhoCarroOcupa;
-			if (i < tamanhoPista) {
-				p.enqueue(c);
+		void adicionaCarro(Carro<T> c, Pista<carro> pistaDestino) {
+			if(!full()) {
+				int e = espacoOcupado;
+				int tamanhoCarroOcupa = c.tamanho + c.distanciaEntreCarros();
+				e = e + tamanhoCarroOcupa;
+				if (e < tamanhoPista) {
+					pistaDestino.enqueue(c);
+					espacoOcupado = espacoOcupado+e;
+				}
+			} else {
+				//?????
 			}
+		}
+
+		bool full() {
+			return tamanhoPista > espacoOcupado+7; //! minimo tamanho carro(4) + 3 de espaço
 		}
 
 		LinkedList<pistas> listaPistasSaida(Pista p) {
@@ -118,47 +127,92 @@ template<typename carros>
 				}
 			} //! Fim Pistas Possiveis
 
+		//! Decidir qual das 3 Possibilidades do Array de Possibilidades Ir
 		Pista pistaParaInserirS1() {
 			Pista PistaSeguinte;
 			if (i == 0) {
-				PistaSeguinte = Sinaleira<T>::probVirarS1.at(0);
+				PistaSeguinte = ArrayList<T> probVirarS1.at(0);
 				i = 1;
-			}
-			if (i == 1) {
-				PistaSeguinte = Sinaleira<T>::probVirarS1.at(1);
+			} else if (i == 1) {
+				PistaSeguinte = ArrayList<T> probVirarS1.at(1);
 				i = 2;
-			}
-			if (i == 2) {
-				PistaSeguinte = Sinaleira<T>::probVirarS1.at(2);
+			} else if (i == 2) {
+				PistaSeguinte = ArrayList<T> probVirarS1.at(2);
 				i = 0;
 			}
 			return PistaSeguinte;
 		}
 
+		//! Decidir qual das 3 Possibilidades do Array de Possibilidades Ir
 		Pista pistaParaInserirS2() {
-					Pista PistaSeguinte;
-					if (i == 0) {
-						PistaSeguinte = Sinaleira<T>::probVirarS1.at(0);
-						i = 1;
-					}
-					if (i == 1) {
-						PistaSeguinte = Sinaleira<T>::probVirarS1.at(1);
-						i = 2;
-					}
-					if (i == 2) {
-						PistaSeguinte = Sinaleira<T>::probVirarS1.at(2);
-						i = 0;
-					}
-					return PistaSeguinte;
+			Pista PistaSeguinte;
+				if (i == 0) {
+					PistaSeguinte = ArrayList<T> probVirarS2.at(0);
+					i = 1;
+				} else if (i == 1) {
+					PistaSeguinte = ArrayList<T> probVirarS2.at(1);
+					i = 2;
+				} else if (i == 2) {
+					PistaSeguinte = Sinaleira<T> probVirarS2.at(2);
+				i = 0;
+			}
+			return PistaSeguinte;
 		}
 
-	protected:
+		//! Probabilidades baseadas num calculo de 1-10
+		void paraOndeVirars1() {
+			srand(time(NULL));
+			int numero = 0;
+			int aleatorio = rand() % 10 + 1;
+			if(aleatorio >= 1 && Aleatorio < 2) {
+				probVirarS1.push_back(pistasPossiveisS1.at(1)); //10
+			}
+			if(aleatorio >= 2 && Aleatorio < 3) {
+				probVirarS1.push_back(pistasPossiveisS1.at(2)); //10
+			}
+				probVirarS1.push_back(pistasPossiveisS1.at(0)); //80
+		}
 
+		void paraOndeVirars1Except() {
+			srand(time(NULL));
+			int numero = 0;
+			int aleatorio = rand() % 10 + 1;
+			if(aleatorio >= 1 && aleatorio <= 4) {
+				probVirarS1.push_back(pistasPossiveisS1.at(0)); //40
+			}
+			if(aleatorio > 4 && aleatorio <=7) {
+				probVirarS1.push_back(pistasPossiveisS1.at(1)); //30
+			}
+			probVirarS1.push_back(pistasPossiveisS1.at(2)); //30
+		}
+
+		void paraOndeVirars2() {
+			srand(time(NULL));
+			int numero = 0;
+			int aleatorio = rand() % 10 + 1;
+			if(aleatorio >= 1 && Aleatorio <= 4) { //40
+				probVirarS2.push_back(pistasPossiveisS1.at(0));
+			}
+			if(aleatorio > 4 && Aleatorio <= 7) { //30
+				probVirarS2.push_back(pistasPossiveisS1.at(1));
+			}
+			probVirarS2.push_back(pistasPossiveisS1.at(2));
+		}
+		//! Fim probabilidades
+
+	protected:
+		//! Descobre qual pista esta e para onde é possíve ir
 		LinkedList<pistas> pistasPossiveisS1;
 		LinkedList<pistas> pistasPossiveisS2;
-		LinkedList<pistas> probVirarS1;
-		LinkedList<pistas> probVirarS2;
+
+		//! Depois de descobrir as possibilidades, calcular as probabilidades
+		//! e adicionar numa lista de pistas [0,1,2]
+		ArrayList<T> probVirarS1 = new ArrayList[2];
+		ArrayList<T> probVirarS2 = new ArrayList[2];
+
+		//! Declaração Pistas Possíveis de que se trata
 		listaPistas<pistas> opcao1, opcao2, opcao3, opcao4, opcao5, opcao6, opcao7, opcao8;
+
 		double velocidadePista;
 		int tamanhoPista;
 		int espacoOcupado;
