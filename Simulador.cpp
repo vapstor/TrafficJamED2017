@@ -4,8 +4,15 @@
 
 #include <iostream>
 using namespace std;
+#include "geradorValoresAleatorio/Gerador.h"
+#include "listaPistas.h"
+#include "Pista.h"
 
 int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	int tempoSimulacao;
+	cout << "Digite o tempo de Simulação: " << endl;
+	cin >> tempoSimulacao;
+	cout << "Quantos carrpos saíram:"
 	return 0;
 }
+

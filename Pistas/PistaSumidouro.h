@@ -21,6 +21,7 @@ template<typename carros>
 		PistaSumidouro (double v, int s) {
 			Pista<carros>::velocidadePista = v;
 			Pista<carros>::tamanhoPista = s;
+			carrosReciclados = 0;
 		}
 
 		int calculaTempoPercorrer(Carro<T> c) {
@@ -35,9 +36,11 @@ template<typename carros>
 			if (relogio >= calculaTempoPercorrer(carroDeletar)) {
 				Carro<carros> CarroFimFila = pistaAtual.deletaCarro();
 			}
+			carrosReciclados++;
 		}
 	protected:
 		Pista<carros> pistaAtual;
+		int carrosReciclados;
 	};
 
 }

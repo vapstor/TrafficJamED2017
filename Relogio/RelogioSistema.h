@@ -27,8 +27,11 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 		}
 
 		void inserirCarro(Carro<T> c, Pista<carro> p) {
-			Pista<T> pistaInsereTeste = listaPistas<T>::S2norte;
-			pistaInsereTeste.adicionaCarro(new Carro, this);
+			int relogio = 0;
+			while (relogio < tempoSimulacao) {
+				Pista<T> pistaInsereTeste = listaPistas<T>::S2norte;
+				pistaInsereTeste.adicionaCarro(new Carro, this);
+			}
 		}
 
 		void mudaEstadoSemaforo(tempo = 30) {
@@ -46,7 +49,7 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 			int s = Pista<carros>::tamanhoPista;
 			double v = Pista<T>::velocidadePista;
 			int tempoParaPercorrer = calculaTempoPercorrer(carroHead, v, s);
-			Pista<T>::ListapistasPossiveis
+			Pista<T>::ListapistasPossiveis.at()
 			Carro<T> carroParaTrocar;
 			if (relogio == tempoParaPercorrer) {
 				carroParaTrocar = Pista<carros>::dequeue();
