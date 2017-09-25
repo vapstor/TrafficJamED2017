@@ -24,8 +24,8 @@ class listaPistas : public LinkedList<pistas>, public Pista<pistas>, public Pist
 	public:
 		listaPistas() {
 			//! Cria Lista
-			LinkedList<filas>::head = NULL;
-			LinkedList<filas>::size_ = 0;
+			LinkedList<pistas>::head = NULL;
+			LinkedList<pistas>::size_ = 0;
 
 			//! Instancia Pistas Sumidouro (Esquerda)
 			O1oeste = new PistaSumidouro(22.22222, 2000); //! 22,22 m/s ~80km/h -- Tempo pra Percorrer: 90s

@@ -84,7 +84,7 @@ class ArrayQueue {
     }
 
     //! Cheia
-    bool full() {
+    virtual bool full() {
         return size() == max_size_;
     }
 

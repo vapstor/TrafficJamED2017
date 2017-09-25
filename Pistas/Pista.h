@@ -18,7 +18,7 @@ namespace structures {
 
 template<typename carros>
 	//! Classe Pista [!sumidouro] (Fila de Vetor)
-	class Pista : public ArrayQueue<carros>{
+	class Pista : public virtual ArrayQueue<carros>, public Sinaleira<carros> , public ListaSemaforos<carros>{
 
 		Pista(double vel, int tam) {
 			tamanhoPista = tam;
@@ -42,176 +42,114 @@ template<typename carros>
 			}
 		}
 
-		bool full() {
+		Carro<carros> deletaCarro() {
+			Pista<carros> pistaAtual = getPistaAtual();
+			Carro<carros> carroVolta = pistaAtual.dequeue();
+			espacoOcupado = espacoOcupado-(carroVolta.tamanhoCarro - carroVolta.distanciaEntreCarros());
+			return carroVolta;
+		}
+
+		virtual bool full() {
 			return tamanhoPista > espacoOcupado+7; //! minimo tamanho carro(4) + 3 de espaço
 		}
 
-		LinkedList<pistas> listaPistasSaida(Pista p) {
-			//! Limpa Pistas Possíveis antes de construir
-			pistasPossiveisS1.clear();
-			pistasPossiveisS2.clear();
-
-			//! Declara Pistas Fontes Possiveis Esquerda
-			opcao1 = listaPistas<T>::PistaFonte<T> O1leste;
-			opcao2 = listaPistas<T>::PistaFonte<T> S1norte;
-			opcao3 = listaPistas<T>::PistaFonte<T> N1sul;
-
-			//! Declara Pistas Fontes Possiveis Direita
-			opcao4 = listaPistas<T>::PistaFonte<T> L1oeste;
-			opcao5 = listaPistas<T>::PistaFonte<T> S2norte;
-			opcao6 = listaPistas<T>::PistaFonte<T> N2sul;
-
-			//! Declara Pistas Centrais
-			opcao7 = listaPistas<T>::Pista<T> C1leste;
-			opcao8 = listaPistas<T>::Pista<T> C1oeste;
-
-			//! Compara Pistas Para descobrir Qual É e Assimilar Probabilidades
-			switch (p) {
-				case opcao1:
-					pistasPossiveisS1.push_back(C1leste); //80
-					pistasPossiveisS1.push_back(S1sul); //10
-					pistasPossiveisS1.push_back(N1norte); //10
-					paraOndeVirars1();
+	//! Assimiliar Listas Eferentes às Filas (não sei pq se tem a sinaleira)
+	LinkedList<carros> PistasSaida() {
+		switch (this) {
+			case N1sul:
+				ListaPistasPossiveis.push_back(C1leste); //80
+				ListaPistasPossiveis.push_back(O1oeste); //10
+				ListaPistasPossiveis.push_back(S1sul); //10
 				break;
-				case opcao2:
-					pistasPossiveisS1.push_back(C1leste); //80
-					pistasPossiveisS1.psuh_back(N1norte); //10
-					pistasPossiveisS1.push_back(O1oeste); //10
-					paraOndeVirars1();
-					break;
-				case opcao3:
-					pistasPossiveisS1.push_back(C1leste); //80
-					pistasPossiveisS1.push_back(O1oeste); //10
-					pistasPossiveisS1.push_back(S1sul); //10
-					paraOndeVirars1();
-					break;
-				case opcao4:
-					pistasPossiveisS2.push_back(N2norte); //40
-					pistasPossiveisS2.push_back(S2sul); //30
-					pistasPossiveisS2.push_back(C1leste); //30
-					paraOndeVirars2();
-					break;
-				case opcao5:
-					pistasPossiveisS2.push_back(L1leste); //40
-					pistasPossiveisS2.push_back(N2norte); //30
-					pistasPossiveisS2.push_back(C1oeste); //30
-					paraOndeVirars2();
-					break;
-				case opcao6:
-					pistasPossiveisS2.push_back(C1oeste); //40
-					pistasPossiveisS2.push_back(L1leste); //30
-					pistasPossiveisS2.push_back(S2sul); //30
-					paraOndeVirars2();
-					break;
-				case opcao7:
-					pistasPossiveisS2.push_back(L1leste); //40
-					pistasPossiveisS2.push_back(N2norte); //30
-					pistasPossiveisS2.push_back(S2sul); //30
-					paraOndeVirars2();
-					break;
-				case opcao8:
-					pistasPossiveisS1.push_back(O1oeste); //40
-					pistasPossiveisS1.push_back(N1norte); //30
-					pistasPossiveisS1.push_back(S1sul); //30
-					paraOndeVirars1Except();
+			case O1leste:
+				ListaPistasPossiveis.push_back(C1leste); //80
+				ListaPistasPossiveis.push_back(S1sul); //10
+				ListaPistasPossiveis.push_back(N1norte); //10
 				break;
-				}
+			case S1norte:
+				ListaPistasPossiveis.push_back(C1leste); //80
+				ListaPistasPossiveis.push_back(N1norte); //10
+				ListaPistasPossiveis.push_back(O1oeste); //10
+				break;
+			case C1oeste:
+				ListaPistasPossiveis.push_back(O1oeste); //40
+				ListaPistasPossiveis.push_back(S1Sul); //30
+				ListaPistasPossiveis.push_back(N1norte); //30
+				break;
+			case N2Sul:
+				ListaPistasPossiveis.push_back(L1leste); //40
+				ListaPistasPossiveis.push_back(C1oeste); //30
+				ListaPistasPossiveis.push_back(S2sul); //30
+				break;
+			case C1leste:
+				ListaPistasPossiveis.push_back(L1leste); //40
+				ListaPistasPossiveis.push_back(N2norte); //30
+				ListaPistasPossiveis.push_back(S2sul); //30
+				break;
+			case S2norte:
+				ListaPistasPossiveis.push_back(L1leste); //40
+				ListaPistasPossiveis.push_back(C1oeste); //30
+				ListaPistasPossiveis.push_back(S2sul); //30
+				break;
+			case L1oeste:
+				ListaPistasPossiveis.push_back(N2norte); //40
+				ListaPistasPossiveis.push_back(C1leste); //30
+				ListaPistasPossiveis.push_back(S2sul); //30
+				break;
+		}
+		return ListaPistasPossiveis;
+	}
 
-				if(pistasPossiveisS1.head == NULL) {
-					return pistasPossiveisS2;
-				}
-				if (pistasPossiveisS2.head == NULL) {
-					return pistasPossiveisS1;
-				} else {
-					throw std::out_of_range("Erro nas Pistas Possíveis [Sinaleira]");
-				}
-			} //! Fim Pistas Possiveis
-
-		//! Decidir qual das 3 Possibilidades do Array de Possibilidades Ir
-		Pista pistaParaInserirS1() {
-			Pista PistaSeguinte;
-			if (i == 0) {
-				PistaSeguinte = ArrayList<T> probVirarS1.at(0);
-				i = 1;
-			} else if (i == 1) {
-				PistaSeguinte = ArrayList<T> probVirarS1.at(1);
-				i = 2;
-			} else if (i == 2) {
-				PistaSeguinte = ArrayList<T> probVirarS1.at(2);
-				i = 0;
-			}
-			return PistaSeguinte;
+		Pista<carros> getPistaAtual() {
+			return this;
 		}
 
-		//! Decidir qual das 3 Possibilidades do Array de Possibilidades Ir
-		Pista pistaParaInserirS2() {
-			Pista PistaSeguinte;
-				if (i == 0) {
-					PistaSeguinte = ArrayList<T> probVirarS2.at(0);
-					i = 1;
-				} else if (i == 1) {
-					PistaSeguinte = ArrayList<T> probVirarS2.at(1);
-					i = 2;
-				} else if (i == 2) {
-					PistaSeguinte = Sinaleira<T> probVirarS2.at(2);
-				i = 0;
+		//! Decidir qual das 3 Possibilidades Ir
+		Pista<carros> pistaParaInserir() {
+			if(			Sinaleira<carros>::getSinaleiraAtual() == ListaSemaforos<carros>::S1leste
+					||  Sinaleira<carros>::getSinaleiraAtual() == ListaSemaforos<carros>::S1sul
+					||  Sinaleira<carros>::getSinaleiraAtual() == ListaSemaforos<carros>::S1Norte
+					) {
+				return calcula_prob_1();
 			}
-			return PistaSeguinte;
+			return calcula_prob_2();
 		}
 
 		//! Probabilidades baseadas num calculo de 1-10
-		void paraOndeVirars1() {
+		Pista<carros> calcula_prob_1 () {
 			srand(time(NULL));
 			int numero = 0;
 			int aleatorio = rand() % 10 + 1;
-			if(aleatorio >= 1 && Aleatorio < 2) {
-				probVirarS1.push_back(pistasPossiveisS1.at(1)); //10
+			if(aleatorio >= 1 && aleatorio <=8) {
+				return pistasPossiveis.at(0); //80%
 			}
-			if(aleatorio >= 2 && Aleatorio < 3) {
-				probVirarS1.push_back(pistasPossiveisS1.at(2)); //10
+			if(aleatorio > 8 && Aleatorio <= 9) {
+				return pistasPossiveis.at(1); //10
 			}
-				probVirarS1.push_back(pistasPossiveisS1.at(0)); //80
+				return pistasPossiveis.at(2); //10
 		}
 
-		void paraOndeVirars1Except() {
+		Pista<carros> calcula_prob_2() {
 			srand(time(NULL));
 			int numero = 0;
 			int aleatorio = rand() % 10 + 1;
 			if(aleatorio >= 1 && aleatorio <= 4) {
-				probVirarS1.push_back(pistasPossiveisS1.at(0)); //40
+				return pistasPossiveis.at(0); //40
 			}
 			if(aleatorio > 4 && aleatorio <=7) {
-				probVirarS1.push_back(pistasPossiveisS1.at(1)); //30
+				return pistasPossiveis.at(1); //30
 			}
-			probVirarS1.push_back(pistasPossiveisS1.at(2)); //30
-		}
-
-		void paraOndeVirars2() {
-			srand(time(NULL));
-			int numero = 0;
-			int aleatorio = rand() % 10 + 1;
-			if(aleatorio >= 1 && Aleatorio <= 4) { //40
-				probVirarS2.push_back(pistasPossiveisS1.at(0));
-			}
-			if(aleatorio > 4 && Aleatorio <= 7) { //30
-				probVirarS2.push_back(pistasPossiveisS1.at(1));
-			}
-			probVirarS2.push_back(pistasPossiveisS1.at(2));
+			return pistasPossiveis.at(2); //30
 		}
 		//! Fim probabilidades
 
 	protected:
-		//! Descobre qual pista esta e para onde é possíve ir
-		LinkedList<pistas> pistasPossiveisS1;
-		LinkedList<pistas> pistasPossiveisS2;
+		//! Descobre quais pistas pode Ir
+		LinkedList<Pista<carros>> ListapistasPossiveis;
 
-		//! Depois de descobrir as possibilidades, calcular as probabilidades
-		//! e adicionar numa lista de pistas [0,1,2]
-		ArrayList<T> probVirarS1 = new ArrayList[2];
-		ArrayList<T> probVirarS2 = new ArrayList[2];
+		//!
+		LinkedList<Pista<carros>> pistasPossiveis = Sinaleira<T>::getPistasSaida();
 
-		//! Declaração Pistas Possíveis de que se trata
-		listaPistas<pistas> opcao1, opcao2, opcao3, opcao4, opcao5, opcao6, opcao7, opcao8;
 
 		double velocidadePista;
 		int tamanhoPista;

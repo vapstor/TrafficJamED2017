@@ -22,45 +22,89 @@ namespace structures {
 
 template <typename T>
 	class Sinaleira : listaPistas<T>, LinkedList<T>, Pista<T>{
-		Sinaleira(Pista p) {
-			SinaleiraDaPista = p;
+	public:
+		Sinaleira() {
 			aberto = false;
-			relogio = 0;
-			PistasEferentes = listaPistasSaida(SinaleiraDaPista);
+			//relogio = 0;
+			PistasSaida = getPistasSaida();
+			PistasEntrada = getPistasEntrada();
 		}
 
-		//! Possíveis Pistas de Entrada na Sinaleira
-		LinkedList<pistas> getPistasAferentes() {
-			listaPistas<pistas> opcao1, opcao2;
-			LinkedList<pistas> pistasAferentes;
-
-			//! Declara Pistas Centrais
-			opcao1 = listaPistas<pistas>::Pista<T> C1oeste;
-			opcao2 = listaPistas<pistas>::Pista<T> C1leste;
-
-			//! Compara Pistas Para descobrir Aferentes
-			switch (SinaleiraDaPista) {
-				case opcao1:
-					pistasAferentes.push_back(L1oeste);
-					pistasAferentes.push_back(N2sul);
-					pistasAferentes.push_back(S2norte);
+		LinkedList<T> getPistasSaida() {
+			//! Compara Pistas Para descobrir Qual É e Assimilar Probabilidades
+			switch (this) {
+				case S1Norte:
+					PistasSaida.push_back(C1leste); //80
+					PistasSaida.push_back(O1oeste); //10
+					PistasSaida.push_back(S1sul); //10
 					break;
-				case opcao2:
-					pistasAferentes.push_back(S1norte);
-					pistasAferentes.psuh_back(N1sul);
-					pistasAferentes.push_back(O1oeste);
+				case S1leste:
+					PistasSaida.push_back(C1leste); //80
+					PistasSaida.push_back(S1sul); //10
+					PistasSaida.push_back(N1norte); //10
+					break;
+				case S1sul:
+					PistasSaida.push_back(C1leste); //80
+					PistasSaida.push_back(N1norte); //10
+					PistasSaida.push_back(O1oeste); //10
+					break;
+				case S1oeste:
+					PistasSaida.push_back(O1oeste); //40
+					PistasSaida.push_back(S1Sul); //30
+					PistasSaida.push_back(N1norte); //30
+					break;
+				case S2Norte:
+					PistasSaida.push_back(L1leste); //40
+					PistasSaida.push_back(C1oeste); //30
+					PistasSaida.push_back(S2sul); //30
+					break;
+				case S2Leste:
+					pistasPossiveisS2.push_back(L1leste); //40
+					pistasPossiveisS2.push_back(N2norte); //30
+					pistasPossiveisS2.push_back(S2sul); //30
+				break;
+				case S2sul:
+					PistasSaida.push_back(L1leste); //40
+					PistasSaida.push_back(C1oeste); //30
+					PistasSaida.push_back(S2sul); //30
+					break;
+				case S2oeste:
+					PistasSaida.push_back(N2norte); //40
+					PistasSaida.push_back(C1leste); //30
+					PistasSaida.push_back(S2sul); //30
+					break;
+			}
+				return PistasSaida;
+		}//! Fim Pistas Possiveis Saída
+
+		//! Possíveis Pistas de Entrada na Sinaleira
+		LinkedList<T> getPistasEntrada() {
+			//! Compara Pistas Para descobrir Aferentes
+			switch (this) {
+				case S1Norte:
+					PistasEntrada.push_back(N1sul);
+					break;
+				case S1Oeste:
+					PistasEntrada.push_back(O1oeste);
+					break;
+				case S1Sul:
+					PistasEntrada.push_back(N1Norte);
+					break;
+				case S1Oeste:
+					PistasEntrada.psuh_back(C1oeste);
 					break;
 			}
 			return pistasAferentes;
 		} //! Fim Pistas Aferentes
 
-
+		Sinaleira<T> getSinaleiraAtual() {
+			return this;
+		}
 	protected:
-		LinkedList<pistas> PistasEferentes;
-		Pista SinaleiraDaPista;
+		LinkedList<T> PistasEntrada;
+		LinkedList<T> PistasSaida;
 		int relogio;
 		bool aberto;
-
 	};
 }
 #endif /* SEMAFORO_SINALEIRA_H_ */

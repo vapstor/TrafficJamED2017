@@ -22,8 +22,8 @@ template <typename T>
 
 class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, listaPistas<T>, Sinaleira<T>{
 	public:
-		RelogioSistema() {
-			relogio = 0;
+		RelogioSistema(int tempo) {
+			tempoSimulacao = tempo;
 		}
 
 		void inserirCarro(Carro<T> c, Pista<carro> p) {
@@ -43,6 +43,7 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 			int s = Pista<carros>::tamanhoPista;
 			double v = Pista<T>::velocidadePista;
 			int tempoParaPercorrer = calculaTempoPercorrer(carroHead, v, s);
+			Pista<T>::ListapistasPossiveis
 			Carro<T> carroParaTrocar;
 			if (relogio == tempoParaPercorrer) {
 				carroParaTrocar = Pista<carros>::dequeue();
@@ -61,10 +62,10 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 
 		void trocaPista(Carro<T> carroTroca) {
 			bool sinaleiraAberta = Sinaleira<T>::aberto;
-			Pista<carros> pistaAtual = Sinaleira<T>::SinaleiraDaPista;
+			Pista<T> pistaAtual = Pista<T>::getPistaAtual();
 			Carro<T> carro = pistaAtual.dequeue();
-			Pista<carros> PistaDestino;
-			//! Test Case Para Verificar Se Pista
+			Pista<T> PistaDestino;
+			//! Test Case Para Verificar Se A Pista Está Aberta
 			if (
 				(pistaAtual == N1Sul && sinaleiraAberta == true)
 				||
@@ -74,7 +75,7 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 				||
 				(pistaAtual = C1oeste && sinaleiraAberta == true)
 			) {
-				PistaDestino = Pista<carros>::pistaParaInserirS1();
+				PistaDestino = Pista<T>::;
 			}
 			if (pistaAtual == N2Sul || pistaAtual == C1leste || pistaAtual == S2norte || pistaAtual = L1leste) {
 				PistaDestino = Pista<carros>::pistaParaInserirS1();
@@ -83,8 +84,8 @@ class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, lis
 		}
 
 	protected:
-		Pista<carros> p;
-		int relogio;
+		Pista<T> p;
+		int tempoSimulacao;
 	};
 }
 

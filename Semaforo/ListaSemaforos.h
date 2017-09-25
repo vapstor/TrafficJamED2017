@@ -24,17 +24,17 @@ template<typename sinaleiras>
 			LinkedList<sinaleiras>::head = NULL;
 			LinkedList<sinaleiras>::size_ = 0;
 
-			//! Instancia Sinaleiras S1
-			S1Norte = new Sinaleira(listaPistas<pistas>::S1norte);
-			S1leste = new Sinaleira(listaPistas<pistas>::O1oeste);
-			S1Oeste = new Sinaleira(listaPistas<pistas>::C1oeste);
-			S1Sul = new Sinaleira(listaPistas<pistas>::N1sul);
+			//! Instancia Sinaleiras Esquerda
+			S1Norte = new Sinaleira();
+			S1leste = new Sinaleira();
+			S1Oeste = new Sinaleira();
+			S1Sul = new Sinaleira();
 
 			// Instancia Sinaleira S2
-			S2Norte = new Sinaleira(listaPistas<pistas>::S2norte);
-			S2Leste = new Sinaleira(listaPistas<pistas>::C1leste);
-			S2Sul = new Sinaleira(listaPistas<pistas>::N2sul);
-			S2Oeste = new Sinaleira(listaPistas<pistas>::L1oeste);
+			S2Norte = new Sinaleira();
+			S2Leste = new Sinaleira();
+			S2Sul = new Sinaleira();
+			S2Oeste = new Sinaleira();
 
 			//! Adiciona Sinaleiras à Lista de Sinaleiras
 			AdicionaSinaleirasNaLista();
@@ -56,7 +56,7 @@ template<typename sinaleiras>
 		}
 
 	protected:
-		Sinaleira S1Norte, S1leste, S1sul, S1Oeste, S2Norte, S2Leste, S2Sul, S2Oeste;
+		Sinaleira<sinaleiras> S1Norte, S1leste, S1sul, S1Oeste, S2Norte, S2Leste, S2Sul, S2Oeste;
 	};
 }
 #endif /* SEMAFORO_LISTASEMAFOROS_H_ */
