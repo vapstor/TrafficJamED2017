@@ -1,23 +1,23 @@
 /*
- * Carro.h
+ * Onibus.h
  *
- *  Created on: 20 de set de 2017
+ *  Created on: 24 de set de 2017
  *      Author: vapstor
  */
 
-#ifndef VEICULO_CARRO_H_
-#define VEICULO_CARRO_H_
+#ifndef VEICULO_ONIBUS_H_
+#define VEICULO_ONIBUS_H_
 
 namespace structures {
 
 template <typename T>
 
-class Carro {
+class Onibus {
 	public:
-		Carro() {
-			tamanho = 4;
-			sSegurancaFrente = 2;
-			sSegurancaAtras = 1;
+		Onibus() {
+			tamanho = 6;
+			sSegurancaFrente = 1;
+			sSegurancaAtras = 2;
 		}
 
 		int espacoAtras() {
@@ -37,6 +37,6 @@ class Carro {
 		int sSegurancaFrente;
 		int sSegurancaAtras;
 	};
-
 }
-#endif /* VEICULO_CARRO_H_ */
+
+#endif /* VEICULO_ONIBUS_H_ */
