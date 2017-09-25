@@ -8,8 +8,8 @@
 #ifndef SEMAFORO_LISTASEMAFOROS_H_
 #define SEMAFORO_LISTASEMAFOROS_H_
 
-#include "./Estruturas/linked_list.h"
-#include "./Pistas/listaPistas.h"
+#include "../Estruturas/linked_list.h"
+#include "../Pistas/listaPistas.h"
 #include "Sinaleira.h"
 
 namespace structures {

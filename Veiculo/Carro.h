@@ -7,7 +7,7 @@
 
 #ifndef VEICULO_CARRO_H_
 #define VEICULO_CARRO_H_
-#include "./geradorValoresAleatorio/Gerador.h"
+#include "../geradorValoresAleatorio/Gerador.h"
 
 namespace structures {
 

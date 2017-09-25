@@ -1,21 +1,11 @@
-/*
- * Simulador.h
- *
- *  Created on: 25 de set de 2017
- *      Author: vapstor
- */
-
-#ifndef SIMULADOR_CPP_
-#define SIMULADOR_CPP_
+//! Calcular o tempo ideal para que mais carros saiam do sistema
+//! Somar todos os sumidouros e ver quais simulações de semaforos deu mais tempo (qnt mais carros sairam)
+//! trocar parametros dos semaforos para ver quantos entraram e sairam do sistema
 
 #include <iostream>
-#include <stdio.h>
-#include "./Veiculo/Carro.h"
-
 using namespace std;
 
-	void main() {
-		cout << "teste";
-	};
-
-#endif /* SIMULADOR_CPP_ */
+int main() {
+	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	return 0;
+}
