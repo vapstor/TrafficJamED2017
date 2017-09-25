@@ -16,7 +16,7 @@ template <typename T>
 class Carro : Gerador<T>{
 	public:
 		Carro() {
-			tamanhoCarro = Gerador<T>(4, 6); //! instancia tamanho do carro entre 4,5,6
+			tamanhoCarro = Gerador<T>::numAleatorio(4,6); //! instancia tamanho do carro entre 4,5,6
 			sSegurancaFrente = 2;
 			sSegurancaAtras = 1;
 		}

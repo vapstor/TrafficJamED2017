@@ -12,35 +12,54 @@
 #include "../Estruturas/linked_list.h"
 #include "../Semaforo/ListaSemaforos.h"
 #include "../Veiculo/Carro.h"
+#include "../Pistas/listaPistas.h"
+#include "../Pistas/Pista.h"
 
 namespace structures {
 
 template <typename T>
 
-class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Carro<T>{
+class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Carro<T>, listaPistas<T>{
 	public:
 		RelogioSistema() {
-
+			relogio = 0;
 		}
 
 
 
-		inserirCarro() {
-			inserir
+		void inserirCarro() {
+			c = new Carro();
+
 		}
 
 		mudancaEstadoSemaforo();
 
-		carroNoSemaforo() {
-			if (pode cruzar)
+
+
+		void carroNoSemaforo() {
+			int tempoPraChegar = calculaTempoPercorrer();
+
+			if (pode cruzar)x
 
 		}
 
-		void trocaPista() {
 
+		int calculaTempoPercorrer(double v, int t) {
+			t = t - (c.tamanhoCarro + c.distanciaEntreCarros());
+			return (int)t/v;
+		}
+
+
+		void trocaPista() {
+			Pista<T> PistaDestino
+			Pista<carros>::head->mext(PistaDestino.tail);
+			int velocidadeDestino = Pista<T>.velocidadePista;
 		}
 
 	protected:
+		Carro<T> c;
+		Pista<carros> p;
+		int relogio;
 	};
 }
 

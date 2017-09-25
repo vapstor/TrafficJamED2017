@@ -9,16 +9,22 @@
 #define PISTAS_PISTAFONTE_H_
 #include "Pista.h"
 #include "./listaPistas.h"
+#include "../Veiculo/Carro.h"
+#include "./geradorValoresAleatorio/Gerador.h"
 
 namespace structures {
 
-template <typename T>
-	class PistaFonte : Pista<T> {
+template <typename carros>
+	class PistaFonte : Pista<carros>{
 		public:
-			PistaFonte(double v, int t, int f) {
+			PistaFonte(double v, int t, int li, int ls) {
 				velocidadePista = v;
 				tamanho = t;
-				varianciaFonte = f;
+				varianciaFonte = calculaVariancia(li, ls);
+			}
+
+			int calculaVariancia(int limiteInferior, int limiteSuperior) {
+				return Gerador<T>::numAleatorio(limiteInferior, limiteSuperior);
 			}
 
 		protected:

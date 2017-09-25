@@ -13,8 +13,8 @@
 
 namespace structures {
 
-template<typename T>
-	class PistaSumidouro : Pista<T>{
+template<typename carros>
+	class PistaSumidouro : Pista<carros>{
 	public:
 		PistaSumidouro (double v, int s) {
 			velocidadePista = v;
