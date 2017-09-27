@@ -5,11 +5,11 @@
  *      Author: vapstor
  */
 
-
 #ifndef SEMAFORO_SINALEIRA_H_
 #define SEMAFORO_SINALEIRA_H_
 #include <stdexcept>  // C++ Exceptions
 #include "../Pistas/listaPistas.h"
+#include "../Semaforo/ListaSemaforos.h"
 #include "../Pistas/Pista.h"
 #include "../Estruturas/linked_list.h"
 
@@ -21,11 +21,11 @@
 namespace structures {
 
 template <typename T>
-	class Sinaleira : listaPistas<T>, LinkedList<T>, Pista<T>{
+class Sinaleira: ListaSemaforos<T>, listaPistas<T>{
 	public:
 		Sinaleira() {
 			aberto = false;
-			//relogio = 0;
+			relogioDoSemaforo = 20;
 			PistasSaida = getPistasSaida();
 			PistasEntrada = getPistasEntrada();
 		}
@@ -59,9 +59,9 @@ template <typename T>
 					PistasSaida.push_back(S2sul); //30
 					break;
 				case S2Leste:
-					pistasPossiveisS2.push_back(L1leste); //40
-					pistasPossiveisS2.push_back(N2norte); //30
-					pistasPossiveisS2.push_back(S2sul); //30
+					PistasSaida.push_back(L1leste); //40
+					PistasSaida.push_back(N2norte); //30
+					PistasSaida.push_back(S2sul); //30
 				break;
 				case S2sul:
 					PistasSaida.push_back(L1leste); //40
@@ -94,17 +94,19 @@ template <typename T>
 					PistasEntrada.psuh_back(C1oeste);
 					break;
 			}
-			return pistasAferentes;
+			return PistasEntrada;
 		} //! Fim Pistas Aferentes
 
 		Sinaleira<T> getSinaleiraAtual() {
 			return this;
 		}
+
 	protected:
 		LinkedList<T> PistasEntrada;
 		LinkedList<T> PistasSaida;
-		int relogio;
+		int relogioDoSemaforo;
 		bool aberto;
+		bool pistaDestinoCheia;
 	};
 }
 #endif /* SEMAFORO_SINALEIRA_H_ */

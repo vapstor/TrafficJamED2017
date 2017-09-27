@@ -17,82 +17,83 @@
 #include "../Semaforo/Sinaleira.h"
 
 namespace structures {
-
 template <typename T>
-
-class RelogioSistema : LinkedList<T>, ListaSemaforos<T>, Pista<T>, Carro<T>, listaPistas<T>, Sinaleira<T>{
+class RelogioSistema : ArrayList<T>, Pista<T>, PistaFonte<T>, ListaSemaforos<T>{
 	public:
 		RelogioSistema(int tempo) {
 			tempoSimulacao = tempo;
 		}
 
-		void inserirCarro(Carro<T> c, Pista<carro> p) {
-			int relogio = 0;
-			while (relogio < tempoSimulacao) {
-				Pista<T> pistaInsereTeste = listaPistas<T>::S2norte;
-				pistaInsereTeste.adicionaCarro(new Carro, this);
+		void inserirCarro() {
+			PistaFonte<T> atual;
+			for (int i = 6; i < 12; i++) { //pistas fontes
+				atual = listaPistas<T>[i];
+				if (atual.varianciaFonte == 1) {
+
+				}
+
+				//Pista pistaInsereTeste = listaPistas::S2norte;
+//				pistaInsereTeste.adicionaCarro(new Carro, this);
 			}
 		}
 
-		void mudaEstadoSemaforo(tempo = 30) {
-			SinaleiraAtual = Sinaleira<T>::getSinaleiraAtual();
-			bool aberto = SinaleiraAtual.aberto;
-			if(aberto) {
-				SinaleiraAtual.aberto = false;
+		void mudaEstadoSemaforo() {
+			Sinaleira<T> sinaleiraAtual = Sinaleira<T>::getSinaleiraAtual();
+			if(sinaleiraAtual->aberto) {
+				sinaleiraAtual->aberto = false;
 			} else {
-				SinaleiraAtual.aberto = true;
+				sinaleiraAtual->aberto = true;
 			}
 		}
 
 		void carroNoSemaforo() {
-			Carro<T> carroHead = Pista<carros>::Pista[0];
-			int s = Pista<carros>::tamanhoPista;
+			Pista<T> pistaAtual = Pista<T>::getPistaAtual();
+			Sinaleira<T> semaforoAtual = Sinaleira<T>::getSinaleiraAtual();
+			int qntsSemaforos = ListaSemaforos<T>::quantidadeSinaleiras();
+			Carro<T> carroParaTrocar = pistaAtual.deletaCarro();
+//			bool pistaCheia = Sinaleira<T>::pistaDestinoCheia;
+			for (int i = 0; i < qntsSemaforos; i++) {
+				if (semaforoAtual->aberto && /*!pistaCheia &&*/ carroParaTrocar !=NULL) {
+					trocaPista();
+				} else {
+					semaforoAtual = ListaSemaforos<T>::nextSinaleira();
+				}
+			}
+			Carro<T> carroHead = Pista<T>::carroNoIndice(0);
+			int s = Pista<T>::tamanhoPista;
 			double v = Pista<T>::velocidadePista;
 			int tempoParaPercorrer = calculaTempoPercorrer(carroHead, v, s);
-			Pista<T>::ListapistasPossiveis.at()
-			Carro<T> carroParaTrocar;
-			if (relogio == tempoParaPercorrer) {
-				carroParaTrocar = Pista<carros>::dequeue();
+			Pista<T>::listaPistasPossiveis.at();
+
+			if (tempoSimulacao == tempoParaPercorrer) {
+				carroParaTrocar = this->dequeue();
 			}
 			trocaPista(carroParaTrocar);
-			if (pode cruzar)x
-
 		}
 
 
 		int calculaTempoPercorrer(Carro<T> c, double v, int s) {
-			s = s - (c.tamanhoCarro + c.distanciaEntreCarros());
-			return (int)t/v;
+			s = s - (c->tamanhoCarro + c.distanciaEntreCarros());
+			return (int)s/v;
 		}
 
 
-		void trocaPista(Carro<T> carroTroca) {
-			bool sinaleiraAberta = Sinaleira<T>::aberto;
+		void trocaPista() {
 			Pista<T> pistaAtual = Pista<T>::getPistaAtual();
+			Carro<T> carroParaTrocar = pistaAtual.deletaCarro();
+			Sinaleira<T> semaforoAtual = Sinaleira<T>::getSinaleiraAtual();
+			Pista<T> pistaDestino = pistaParaInserir(semaforoAtual);
+
+			bool sinaleiraAberta = Sinaleira<T>::aberto;
 			Carro<T> carro = pistaAtual.dequeue();
 			Pista<T> PistaDestino;
 			//! Test Case Para Verificar Se A Pista Está Aberta
-			if (
-				(pistaAtual == N1Sul && sinaleiraAberta == true)
-				||
-				(pistaAtual == O1leste && sinaleiraAberta == true)
-				||
-				(pistaAtual == S1norte && sinaleiraAberta == true)
-				||
-				(pistaAtual = C1oeste && sinaleiraAberta == true)
-			) {
-				PistaDestino = Pista<T>::;
-			}
-			if (pistaAtual == N2Sul || pistaAtual == C1leste || pistaAtual == S2norte || pistaAtual = L1leste) {
-				PistaDestino = Pista<carros>::pistaParaInserirS1();
-			}
-			inserirCarro(carro, PistaDestino);
+
 		}
 
 	protected:
 		Pista<T> p;
 		int tempoSimulacao;
-		Sinaleira<T> SinaleiraAtual;
 	};
 }
 

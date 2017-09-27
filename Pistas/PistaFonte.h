@@ -8,38 +8,37 @@
 #ifndef PISTAS_PISTAFONTE_H_
 #define PISTAS_PISTAFONTE_H_
 #include "Pista.h"
-#include "./listaPistas.h"
 #include "../Veiculo/Carro.h"
 #include "../Relogio/RelogioSistema.h"
-#include "./geradorValoresAleatorio/Gerador.h"
+#include "../geradorValoresAleatorio/Gerador.h"
+#include "listaPistas.h"
 
 namespace structures {
 
-template <typename carros>
-	class PistaFonte : Pista<carros>, RelogioSistema<carros>{
+template <typename T>
+	class PistaFonte : Pista<T>, RelogioSistema<T>, Carro<T>{
 		public:
 			PistaFonte(double v, int t, int li, int ls) {
 				velocidadePista = v;
-				Pista<T>::tamanho = t;
-				novoCarro = new Carro();
+				tamanho = t;
 				varianciaFonte = calculaVariancia(li, ls);
 			}
 
 			int calculaVariancia(int limiteInferior, int limiteSuperior) {
-				return Gerador<carros>::numAleatorio(limiteInferior, limiteSuperior);
+				return Gerador<T>::numAleatorio(limiteInferior, limiteSuperior);
 			}
 
-			void adicionaCarro(Carro<carros> c, int v) {
+			void criaCarro(Carro<T> c, int v) {
 				novoCarro = c;
 				varianciaFonte = v;
-				int time = RelogioSistema<carros>::tempoSimulacao;
-				if(varianciaFonte >= time) {
+				int time = RelogioSistema<T>::tempoSimulacao;
+				if(varianciaFonte == time) {
 					this->enqueue(novoCarro);
 				}
 			}
 
-		protected:
-			Carro<carros> novoCarro;
+		public:
+			Carro<T> novoCarro;
 			double velocidadePista;
 			int tamanho;
 			int varianciaFonte;

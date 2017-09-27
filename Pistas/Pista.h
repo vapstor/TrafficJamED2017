@@ -10,16 +10,21 @@
 
 #include <cstdint>  // std::size_t
 #include <stdexcept>  // C++ Exceptions
-#include "./Estruturas/array_queue.h" //! Fila Encadeada
-#include "./Veiculo/Carro.h"
-#include "./Semaforo/Sinaleira.h"
-#include "./Estruturas/array_list.h"
+#include "../Estruturas/array_queue.h" //! Fila Encadeada
+#include "../Semaforo/Sinaleira.h"
+#include "../Semaforo/ListaSemaforos.h"
+#include "../Pistas/listaPistas.h"
+#include "../Veiculo/Carro.h"
+#include "../Estruturas/array_list.h"
+
 namespace structures {
 
-template<typename carros>
-	//! Classe Pista [!sumidouro] (Fila de Vetor)
-	class Pista : public virtual ArrayQueue<carros>, public Sinaleira<carros> , public ListaSemaforos<carros>{
+template<typename T>
+	//! Classe Pista (Fila de Vetor)
 
+// : public virtual ArrayQueue<T>, Sinaleira<T>, ListaSemaforos<T>, listaPistas<T>, Carro<T>
+class Pista : ArrayQueue<T> {
+	public:
 		Pista(double vel, int tam) {
 			tamanhoPista = tam;
 			velocidadePista = vel;
@@ -27,88 +32,93 @@ template<typename carros>
 			i = 0;
 		}
 
-		//! Se o tamanho ocupado+tamanho que o carro ocupa ainda for menor que o tamanho da pista, adiciona carro
-		void adicionaCarro(Carro<T> c, Pista<carro> pistaDestino) {
+		//! Se o tamanho ocupado+tamanho que o carro ocupa ainda for menor que o tamanho da pista, adiciona carro (enqueue)
+			void adicionaCarro(Carro<T> c) {
 			if(!full()) {
 				int e = espacoOcupado;
 				int tamanhoCarroOcupa = c.tamanho + c.distanciaEntreCarros();
 				e = e + tamanhoCarroOcupa;
 				if (e < tamanhoPista) {
-					pistaDestino.enqueue(c);
+					this->enqueue(c);
 					espacoOcupado = espacoOcupado+e;
 				}
 			} else {
-				//?????
+				//Sinaleira->PistaDestinoCheia (?)
+				//Tranca Pista
 			}
 		}
 
-		Carro<carros> deletaCarro() {
-			Pista<carros> pistaAtual = getPistaAtual();
-			Carro<carros> carroVolta = pistaAtual.dequeue();
-			espacoOcupado = espacoOcupado-(carroVolta.tamanhoCarro - carroVolta.distanciaEntreCarros());
-			return carroVolta;
-		}
+		//! Método deleta Carro (dequeue)
+			Carro<T> deletaCarro() {
+//				Pista<T> pistaAtual = getPistaAtual(); //! <- isso ou:
 
-		virtual bool full() {
-			return tamanhoPista > espacoOcupado+7; //! minimo tamanho carro(4) + 3 de espaço
-		}
+				Carro<T> carroVolta = this->dequeue();
+				espacoOcupado = espacoOcupado-(carroVolta.tamanhoCarro - carroVolta.distanciaEntreCarros());
+				return carroVolta;
+			}
 
-	//! Assimiliar Listas Eferentes às Filas (não sei pq se tem a sinaleira)
-	LinkedList<carros> PistasSaida() {
-		switch (this) {
-			case N1sul:
-				ListaPistasPossiveis.push_back(C1leste); //80
-				ListaPistasPossiveis.push_back(O1oeste); //10
-				ListaPistasPossiveis.push_back(S1sul); //10
-				break;
-			case O1leste:
-				ListaPistasPossiveis.push_back(C1leste); //80
-				ListaPistasPossiveis.push_back(S1sul); //10
-				ListaPistasPossiveis.push_back(N1norte); //10
-				break;
-			case S1norte:
-				ListaPistasPossiveis.push_back(C1leste); //80
-				ListaPistasPossiveis.push_back(N1norte); //10
-				ListaPistasPossiveis.push_back(O1oeste); //10
-				break;
-			case C1oeste:
-				ListaPistasPossiveis.push_back(O1oeste); //40
-				ListaPistasPossiveis.push_back(S1Sul); //30
-				ListaPistasPossiveis.push_back(N1norte); //30
-				break;
-			case N2Sul:
-				ListaPistasPossiveis.push_back(L1leste); //40
-				ListaPistasPossiveis.push_back(C1oeste); //30
-				ListaPistasPossiveis.push_back(S2sul); //30
-				break;
-			case C1leste:
-				ListaPistasPossiveis.push_back(L1leste); //40
-				ListaPistasPossiveis.push_back(N2norte); //30
-				ListaPistasPossiveis.push_back(S2sul); //30
-				break;
-			case S2norte:
-				ListaPistasPossiveis.push_back(L1leste); //40
-				ListaPistasPossiveis.push_back(C1oeste); //30
-				ListaPistasPossiveis.push_back(S2sul); //30
-				break;
-			case L1oeste:
-				ListaPistasPossiveis.push_back(N2norte); //40
-				ListaPistasPossiveis.push_back(C1leste); //30
-				ListaPistasPossiveis.push_back(S2sul); //30
-				break;
-		}
-		return ListaPistasPossiveis;
+		//! Metodo Pista Cheia
+			virtual bool full() {
+				return tamanhoPista > espacoOcupado+7; //! minimo tamanho carro(4) + 3 de espaço
+			}
+
+		//! Assimiliar Listas Eferentes às Filas (não sei pq se tem a sinaleira)
+			LinkedList<T> PistasSaida() {
+				switch (this) {
+					case N1sul:
+						ListaPistasPossiveis.push_back(C1leste); //80
+						ListaPistasPossiveis.push_back(O1oeste); //10
+						ListaPistasPossiveis.push_back(S1sul); //10
+						break;
+					case O1leste:
+						ListaPistasPossiveis.push_back(C1leste); //80
+						ListaPistasPossiveis.push_back(S1sul); //10
+						ListaPistasPossiveis.push_back(N1norte); //10
+						break;
+					case S1norte:
+						ListaPistasPossiveis.push_back(C1leste); //80
+						ListaPistasPossiveis.push_back(N1norte); //10
+						ListaPistasPossiveis.push_back(O1oeste); //10
+						break;
+					case C1oeste:
+						ListaPistasPossiveis.push_back(O1oeste); //40
+						ListaPistasPossiveis.push_back(S1Sul); //30
+						ListaPistasPossiveis.push_back(N1norte); //30
+						break;
+					case N2Sul:
+						ListaPistasPossiveis.push_back(L1leste); //40
+						ListaPistasPossiveis.push_back(C1oeste); //30
+						ListaPistasPossiveis.push_back(S2sul); //30
+						break;
+					case C1leste:
+						ListaPistasPossiveis.push_back(L1leste); //40
+						ListaPistasPossiveis.push_back(N2norte); //30
+						ListaPistasPossiveis.push_back(S2sul); //30
+						break;
+					case S2norte:
+						ListaPistasPossiveis.push_back(L1leste); //40
+						ListaPistasPossiveis.push_back(C1oeste); //30
+						ListaPistasPossiveis.push_back(S2sul); //30
+						break;
+					case L1oeste:
+						ListaPistasPossiveis.push_back(N2norte); //40
+						ListaPistasPossiveis.push_back(C1leste); //30
+						ListaPistasPossiveis.push_back(S2sul); //30
+						break;
+				}
+				return ListaPistasPossiveis;
 	}
 
-		Pista<carros> getPistaAtual() {
-			return this;
-		}
+		//! Retorna Pista Atual
+			Pista<T> getPistaAtual() {
+				return this;
+			}
 
 		//! Decidir qual das 3 Possibilidades Ir
-		Pista<carros> pistaParaInserir() {
-			if(			Sinaleira<carros>::getSinaleiraAtual() == ListaSemaforos<carros>::S1leste
-					||  Sinaleira<carros>::getSinaleiraAtual() == ListaSemaforos<carros>::S1sul
-					||  Sinaleira<carros>::getSinaleiraAtual() == ListaSemaforos<carros>::S1Norte
+			Pista<T> pistaParaInserir(Sinaleira<T> sinaleiraAtual) {
+			if(			sinaleiraAtual == ListaSemaforos<T>::S1leste
+					||  sinaleiraAtual == ListaSemaforos<T>::S1sul
+					||  sinaleiraAtual == ListaSemaforos<T>::S1Norte
 					) {
 				return calcula_prob_1();
 			}
@@ -116,20 +126,20 @@ template<typename carros>
 		}
 
 		//! Probabilidades baseadas num calculo de 1-10
-		Pista<carros> calcula_prob_1 () {
+			Pista<T> calcula_prob_1 () {
 			srand(time(NULL));
 			int numero = 0;
 			int aleatorio = rand() % 10 + 1;
 			if(aleatorio >= 1 && aleatorio <=8) {
 				return pistasPossiveis.at(0); //80%
 			}
-			if(aleatorio > 8 && Aleatorio <= 9) {
+			if(aleatorio > 8 && aleatorio <= 9) {
 				return pistasPossiveis.at(1); //10
 			}
 				return pistasPossiveis.at(2); //10
 		}
 
-		Pista<carros> calcula_prob_2() {
+			Pista<T> calcula_prob_2() {
 			srand(time(NULL));
 			int numero = 0;
 			int aleatorio = rand() % 10 + 1;
@@ -143,19 +153,20 @@ template<typename carros>
 		}
 		//! Fim probabilidades
 
-	protected:
+		Carro<T> carroNoIndice(int index) {
+			return ArrayQueue<T>::at(index);
+		}
+	public:
 		//! Descobre quais pistas pode Ir
-		LinkedList<Pista<carros>> ListapistasPossiveis;
-
+		LinkedList<T> ListaPistasPossiveis;
 		//!
-		LinkedList<Pista<carros>> pistasPossiveis = Sinaleira<T>::getPistasSaida();
-
+		LinkedList<T> pistasPossiveis = Sinaleira<T>::getPistasSaida();
 
 		double velocidadePista;
 		int tamanhoPista;
 		int espacoOcupado;
 		int i;
 	};
-}  //! namespace structures
+};  //! namespace structures
 
 #endif /* PISTAS_PISTA_H_ */

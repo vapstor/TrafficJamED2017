@@ -2,7 +2,7 @@
 #ifndef STRUCTURES_ARRAY_LIST_H
 #define STRUCTURES_ARRAY_LIST_H
 
-#include "./array_queue.h"
+#include "array_queue.h"
 #include <cstdint>  // std::size_t
 #include <stdexcept>  // C++ Exceptions
 
@@ -188,21 +188,21 @@ class ArrayList : ArrayQueue<T> {
         return contents[index];
     }
 
-    //! Posição do Índice CONST
-    const T& at(std::size_t index) const {
-        if (empty()) {
-            throw std::out_of_range("Lista Vazia");
-        }
-        if (index < 0 || index > size_) {
-            throw std::out_of_range("Lista Vazia");
-        }
-        return contents[index];
-    }
-
-    //! Dado Operator CONST
-    const T& operator[](std::size_t index) const {
-        return contents[index];
-    }
+////    //! Posição do Índice CONST
+////    const T& at(std::size_t index) const {
+//        if (empty()) {
+//            throw std::out_of_range("Lista Vazia");
+//        }
+//        if (index < 0 || index > size_) {
+//            throw std::out_of_range("Lista Vazia");
+//        }
+//        return contents[index];
+//    }
+//
+//    //! Dado Operator CONST
+//    const T& operator[](std::size_t index) const {
+//        return contents[index];
+//    }
 
  private:
     T* contents;

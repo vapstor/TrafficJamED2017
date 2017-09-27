@@ -8,19 +8,19 @@
 #ifndef PISTAS_PISTASUMIDOURO_H_
 #define PISTAS_PISTASUMIDOURO_H_
 #include "../Estruturas/array_list.h"
-#include "Pista.h";
+#include "Pista.h"
+#include "../Veiculo/Carro.h"
+#include "../Relogio/RelogioSistema.h"
 #include "listaPistas.h"
-#include "./Veiculo/Carro.h"
-#include "./Relogio/RelogioSistema.h"
 
 namespace structures {
 
-template<typename carros>
-	class PistaSumidouro : Pista<carros>, RelogioSistema<carros> {
+template<typename T>
+	class PistaSumidouro : public Pista<T>, RelogioSistema<T> {
 	public:
 		PistaSumidouro (double v, int s) {
-			Pista<carros>::velocidadePista = v;
-			Pista<carros>::tamanhoPista = s;
+			velocidadePista = v;
+			tamanhoPista = s;
 			carrosReciclados = 0;
 		}
 
@@ -30,17 +30,20 @@ template<typename carros>
 		}
 
 		void fimDaFila() {
-			pistaAtual = Pista<carros>::getPistaAtual();
-			Carro<carros> CarroDeletar = pistaAtual.at(0);
-			int relogio = RelogioSistema<carros>::relogio;
-			if (relogio >= calculaTempoPercorrer(carroDeletar)) {
-				Carro<carros> CarroFimFila = pistaAtual.deletaCarro();
+			pistaAtual = Pista<T>::getPistaAtual();
+			Carro<T> CarroDeletar = pistaAtual.at(0);
+			int relogio = RelogioSistema<T>::relogio;
+			if (relogio >= calculaTempoPercorrer(CarroDeletar)) {
+				Carro<T> CarroFimFila = pistaAtual.deletaCarro();
 			}
 			carrosReciclados++;
 		}
 	protected:
-		Pista<carros> pistaAtual;
+		Pista<T> pistaAtual;
+		double velocidadePista;
+		int tamanhoPista;
 		int carrosReciclados;
+
 	};
 
 }

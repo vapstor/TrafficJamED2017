@@ -16,20 +16,10 @@ namespace structures {
 template<typename T>
 	class Gerador {
 	public:
-		Gerador(int lI, int lS){
-			limiteInferior = lI;
-			limiteSuperior = lS;
-			num = numAleatorio(limiteInferior, limiteSuperior);
-		}
-
-		int numAleatorio(int li, int ls) {
+		int numAleatorio(int limiteInferior, int limiteSuperior) {
 			srand((unsigned)time(NULL)); //numero aleatorio
 			return int(((double(rand())/RAND_MAX)*(limiteSuperior - limiteInferior)) +limiteInferior);
 		}
-
-	public:
-		int limiteInferior, limiteSuperior, num;
-	};
-}
+};
 
 #endif /* GERADORVALORESALEATORIO_GERADOR_H_ */
